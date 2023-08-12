@@ -21,7 +21,13 @@ function Cuisine() {
     },[params.type]);
 
     return <Grid>
-        {cuisine.map((item))}
+        {cuisine.map((item) => {
+            return(
+                <Card key={item.id}>
+                    <img/>
+                </Card>
+            )
+        })}
     </Grid>;
 }
 
