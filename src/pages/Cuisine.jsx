@@ -9,7 +9,7 @@ function Cuisine() {
     let params = useParams();
 
     const getCuisine = async (name) => {
-        const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&cuisine=${name}`);
+        const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_API_KEY}&number=9&cuisine=${name}`);
         const recipes = await data.json();
         setCuisine(recipes.results);
     };
@@ -20,12 +20,19 @@ function Cuisine() {
     }, [params.type]);
 
     return (
-        <Grid>
+        <Grid
+            animate={{opacity: 1}}
+            initial={{opacity: 0}}
+            exit={{opacity: 0}}
+            transition={{duration: 0.5}}
+        >
             {cuisine.map((item) => (
                 <Link to={`/recipe/${item.id}`} key={item.id}>
                     <Card>
-                        <img src={item.image} alt="" />
-                        <h4>{item.title}</h4>
+                        <Link to={"/recipe/" + item.id}>
+                            <img src={item.image} alt="" />
+                            <h4>{item.title}</h4>
+                        </Link>
                     </Card>
                 </Link>
             ))}
@@ -33,7 +40,7 @@ function Cuisine() {
     );
 }
 
-const Grid = styled.div`
+const Grid = styled(motion.div)`
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
     grid-gap: 3rem;
