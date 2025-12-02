@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Styled, { styled } from "styled-components";
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/splide/dist/css/splide.min.css';
+import { styled } from "styled-components";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/splide/dist/css/splide.min.css";
 import { Link } from "react-router-dom";
 
 function Popular() {
@@ -12,24 +12,20 @@ function Popular() {
   }, []);
 
   const getPopular = async () => {
-
-    const check = localStorage.getItem ('popular');
+    const check = localStorage.getItem("popular");
 
     if (check) {
-        setPopularData(JSON.parse(check));
+      setPopularData(JSON.parse(check));
     } else {
-        const api = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9`);
-        const data = await api.json();
-    
-        localStorage.setItem("popular", JSON.stringify(data.recipes));
-        setPopularData(data.recipes);
-        console.log(data.recipes);
-    }
-    
+      const api = await fetch(
+        `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_API_KEY}&number=9`
+      );
+      const data = await api.json();
 
-    
-    
-    
+      localStorage.setItem("popular", JSON.stringify(data.recipes));
+      setPopularData(data.recipes);
+      console.log(data.recipes);
+    }
   };
 
   // Output the `popularData` object to the console
@@ -40,13 +36,15 @@ function Popular() {
       {popularData.length > 0 ? (
         <Wrapper>
           <h3>Popular Picks</h3>
-          <Splide options={{
-            perPage: 4,
-            arrows: false,
-            pagination: false,
-            drag: 'free',
-            gap: "5rem",
-          }}>
+          <Splide
+            options={{
+              perPage: 4,
+              arrows: false,
+              pagination: false,
+              drag: "free",
+              gap: "5rem",
+            }}
+          >
             {popularData.map((recipe) => (
               <SplideSlide key={recipe.id}>
                 <Card>
